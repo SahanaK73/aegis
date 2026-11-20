@@ -1,0 +1,3 @@
+-r collector/requirements.txt
+-r backend/requirements.txt
+-r aiops/requirements.txt

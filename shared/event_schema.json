@@ -1,0 +1,390 @@
+{
+  "$defs": {
+    "AuthFailureSummaryEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "collector_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Collector Id",
+          "type": "string"
+        },
+        "event_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "const": "auth_failure_summary",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "failure_count": {
+          "minimum": 0,
+          "title": "Failure Count",
+          "type": "integer"
+        },
+        "policy_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^[a-z0-9][a-z0-9-]{1,31}$",
+          "title": "Region",
+          "type": "string"
+        },
+        "service_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Service Id",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "source_timezone": {
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+-]+)*$",
+          "title": "Source Timezone",
+          "type": "string"
+        },
+        "summary_code": {
+          "pattern": "^[A-Z][A-Z0-9_]{0,63}$",
+          "title": "Summary Code",
+          "type": "string"
+        },
+        "timestamp_utc": {
+          "title": "Timestamp Utc",
+          "type": "string"
+        },
+        "window_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Window Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "event_id",
+        "collector_id",
+        "timestamp_utc",
+        "source_timezone",
+        "region",
+        "severity",
+        "policy_version",
+        "event_type",
+        "service_id",
+        "failure_count",
+        "window_seconds",
+        "summary_code"
+      ],
+      "title": "AuthFailureSummaryEvent",
+      "type": "object"
+    },
+    "HeartbeatEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "collector_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Collector Id",
+          "type": "string"
+        },
+        "collector_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,31}$",
+          "title": "Collector Version",
+          "type": "string"
+        },
+        "cpu_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cpu Percent"
+        },
+        "event_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "const": "heartbeat",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "health_scope": {
+          "enum": [
+            "collector",
+            "infrastructure"
+          ],
+          "title": "Health Scope",
+          "type": "string"
+        },
+        "health_state": {
+          "enum": [
+            "excellent",
+            "good",
+            "fair",
+            "poor"
+          ],
+          "title": "Health State",
+          "type": "string"
+        },
+        "memory_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Memory Percent"
+        },
+        "policy_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "queue_backlog": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Queue Backlog"
+        },
+        "region": {
+          "pattern": "^[a-z0-9][a-z0-9-]{1,31}$",
+          "title": "Region",
+          "type": "string"
+        },
+        "service_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Id"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "source_timezone": {
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+-]+)*$",
+          "title": "Source Timezone",
+          "type": "string"
+        },
+        "timestamp_utc": {
+          "title": "Timestamp Utc",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "collector_id",
+        "timestamp_utc",
+        "source_timezone",
+        "region",
+        "severity",
+        "policy_version",
+        "event_type",
+        "health_scope",
+        "health_state",
+        "collector_version"
+      ],
+      "title": "HeartbeatEvent",
+      "type": "object"
+    },
+    "MetricEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "collector_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Collector Id",
+          "type": "string"
+        },
+        "dependency_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dependency Id"
+        },
+        "event_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "const": "metric",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "health_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "collector",
+                "infrastructure"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Health Scope"
+        },
+        "metric_name": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Metric Name",
+          "type": "string"
+        },
+        "metric_value": {
+          "title": "Metric Value",
+          "type": "number"
+        },
+        "policy_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^[a-z0-9][a-z0-9-]{1,31}$",
+          "title": "Region",
+          "type": "string"
+        },
+        "resource_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resource Id"
+        },
+        "service_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Service Id",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "source_timezone": {
+          "pattern": "^[A-Za-z_]+(?:/[A-Za-z0-9_+-]+)*$",
+          "title": "Source Timezone",
+          "type": "string"
+        },
+        "timestamp_utc": {
+          "title": "Timestamp Utc",
+          "type": "string"
+        },
+        "unit": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$",
+          "title": "Unit",
+          "type": "string"
+        },
+        "window_seconds": {
+          "anyOf": [
+            {
+              "maximum": 86400,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Window Seconds"
+        }
+      },
+      "required": [
+        "event_id",
+        "collector_id",
+        "timestamp_utc",
+        "source_timezone",
+        "region",
+        "severity",
+        "policy_version",
+        "event_type",
+        "service_id",
+        "metric_name",
+        "metric_value",
+        "unit"
+      ],
+      "title": "MetricEvent",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "auth_failure_summary": "#/$defs/AuthFailureSummaryEvent",
+      "heartbeat": "#/$defs/HeartbeatEvent",
+      "metric": "#/$defs/MetricEvent"
+    },
+    "propertyName": "event_type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/MetricEvent"
+    },
+    {
+      "$ref": "#/$defs/HeartbeatEvent"
+    },
+    {
+      "$ref": "#/$defs/AuthFailureSummaryEvent"
+    }
+  ]
+}

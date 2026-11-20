@@ -1,0 +1,14 @@
+{
+  "collector_id": "collector-001",
+  "collector_version": "0.1.0",
+  "event_id": "evt-000008",
+  "event_type": "heartbeat",
+  "health_scope": "collector",
+  "health_state": "excellent",
+  "policy_version": "v1",
+  "queue_backlog": 7,
+  "region": "ap-south",
+  "severity": "info",
+  "source_timezone": "Asia/Kolkata",
+  "timestamp_utc": "2026-11-20T10:59:10Z"
+}

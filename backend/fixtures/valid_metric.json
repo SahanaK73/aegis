@@ -1,0 +1,16 @@
+{
+  "collector_id": "collector-001",
+  "event_id": "evt-000001",
+  "event_type": "metric",
+  "health_scope": "infrastructure",
+  "metric_name": "cpu_usage",
+  "metric_value": 28.24,
+  "policy_version": "v1",
+  "region": "ap-south",
+  "service_id": "api-gateway",
+  "severity": "info",
+  "source_timezone": "Asia/Kolkata",
+  "timestamp_utc": "2026-11-20T10:59:10Z",
+  "unit": "percent",
+  "window_seconds": 1
+}

@@ -1,0 +1,14 @@
+{
+  "collector_id": "collector-001",
+  "event_id": "evt-000064",
+  "event_type": "auth_failure_summary",
+  "failure_count": 5,
+  "policy_version": "v1",
+  "region": "ap-south",
+  "service_id": "auth-service",
+  "severity": "high",
+  "source_timezone": "Asia/Kolkata",
+  "summary_code": "REPEATED_AUTH_FAILURE",
+  "timestamp_utc": "2026-11-20T10:59:12Z",
+  "window_seconds": 60
+}
