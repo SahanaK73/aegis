@@ -52,7 +52,9 @@ def records_for_tick(scenario: str, tick: int, rng: random.Random) -> list[dict[
     for svc in SERVICES:
         cpu = 30 + rng.uniform(-5, 5)
         lat = 40 + rng.uniform(-8, 8)
-        cpu_sev = lat_sev = "info"
+        mem = 45 + rng.uniform(-4, 4)
+        pkt = 0.08 + rng.uniform(-0.04, 0.04)
+        cpu_sev = lat_sev = mem_sev = pkt_sev = "info"
         if scenario == "cpu_spike" and svc == "payment-service" and tick >= 3:
             cpu = min(99.0, 70 + tick * 3 + rng.uniform(0, 3))
             cpu_sev = "high"
@@ -64,8 +66,11 @@ def records_for_tick(scenario: str, tick: int, rng: random.Random) -> list[dict[
                 lat, lat_sev = 280 + rng.uniform(0, 30), "warning"
         if scenario == "network_degradation" and svc == "api-gateway" and tick >= 3:
             lat, lat_sev = 250 + tick * 20 + rng.uniform(0, 20), "high"
+            pkt, pkt_sev = 4 + rng.uniform(0, 3), "high"
         out.append(_metric(svc, "cpu_percent", cpu, "percent", cpu_sev))
         out.append(_metric(svc, "latency_ms", lat, "ms", lat_sev))
+        out.append(_metric(svc, "memory_percent", mem, "percent", mem_sev))
+        out.append(_metric(svc, "packet_loss_percent", max(0.0, pkt), "percent", pkt_sev))
 
     if scenario == "network_degradation" and tick >= 3:
         out.append(_metric("api-gateway", "packet_loss_percent", 4 + rng.uniform(0, 3), "percent", "high"))
