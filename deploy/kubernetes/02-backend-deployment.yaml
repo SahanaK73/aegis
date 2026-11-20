@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegis-backend
+  namespace: aegis
+  labels:
+    app: aegis-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aegis-backend
+  template:
+    metadata:
+      labels:
+        app: aegis-backend
+    spec:
+      containers:
+      - name: backend
+        image: aegis-backend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: AEGIS_DB_DSN
+          valueFrom:
+            secretKeyRef:
+              name: aegis-secrets
+              key: AEGIS_DB_DSN
+        - name: AEGIS_TOKEN_TENANT_A
+          valueFrom:
+            secretKeyRef:
+              name: aegis-secrets
+              key: AEGIS_TOKEN_TENANT_A
+        - name: AEGIS_TOKEN_TENANT_B
+          valueFrom:
+            secretKeyRef:
+              name: aegis-secrets
+              key: AEGIS_TOKEN_TENANT_B
+        - name: AEGIS_CORS_ORIGINS
+          valueFrom:
+            configMapKeyRef:
+              name: aegis-config
+              key: AEGIS_CORS_ORIGINS
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aegis-backend-service
+  namespace: aegis
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  selector:
+    app: aegis-backend

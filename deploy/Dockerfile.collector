@@ -1,0 +1,12 @@
+# Aegis Collector Containerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY collector/ collector/
+COPY shared/ shared/
+
+CMD ["python", "-m", "collector.main", "run", "--scenario", "payment_latency_spike"]

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aegis
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aegis-config
+  namespace: aegis
+data:
+  AEGIS_CORS_ORIGINS: "http://localhost:5173,http://localhost:3000,http://aegis.local"
+  AEGIS_AIOPS_MODE: "background"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aegis-secrets
+  namespace: aegis
+type: Opaque
+stringData:
+  POSTGRES_DB: "aegis_db"
+  POSTGRES_USER: "aegis_user"
+  POSTGRES_PASSWORD: "aegis_pass"
+  AEGIS_DB_DSN: "dbname=aegis_db user=aegis_user password=aegis_pass host=postgres-service port=5432"
+  AEGIS_TOKEN_TENANT_A: "dev-token-tenant-a"
+  AEGIS_TOKEN_TENANT_B: "dev-token-tenant-b"

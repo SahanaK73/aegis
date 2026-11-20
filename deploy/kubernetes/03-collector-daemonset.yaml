@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: aegis-collector-daemonset
+  namespace: aegis
+  labels:
+    app: aegis-collector
+spec:
+  selector:
+    matchLabels:
+      app: aegis-collector
+  template:
+    metadata:
+      labels:
+        app: aegis-collector
+    spec:
+      containers:
+      - name: collector
+        image: aegis-collector:latest
+        imagePullPolicy: IfNotPresent
+        command: ["python", "-m", "collector.main", "run", "--scenario", "payment_latency_spike"]
+        env:
+        - name: AEGIS_ENDPOINT
+          value: "http://aegis-backend-service.aegis.svc.cluster.local:8000/api/v1/events"
+        - name: AEGIS_COLLECTOR_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: aegis-secrets
+              key: AEGIS_TOKEN_TENANT_A
+        - name: AEGIS_DB_PATH
+          value: "/data/collector.db"
+        - name: AEGIS_TICK_SECONDS
+          value: "1"
+        - name: AEGIS_HEARTBEAT_SECONDS
+          value: "5"
+        volumeMounts:
+        - name: outbox-buffer
+          mountPath: /data
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 150m
+            memory: 128Mi
+      volumes:
+      - name: outbox-buffer
+        emptyDir: {}
