@@ -5,7 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 SCENARIO="${1:-payment_latency_spike}"
-export AEGIS_DB_PATH="${AEGIS_DB_PATH:-backend.db}"
+export AEGIS_DB_DSN="${AEGIS_DB_DSN:-dbname=aegis_db user=aegis_user password=aegis_pass host=127.0.0.1}"
 pids=()
 cleanup() { for p in "${pids[@]:-}"; do kill "$p" 2>/dev/null || true; done; }
 trap cleanup EXIT INT TERM

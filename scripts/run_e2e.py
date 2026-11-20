@@ -40,7 +40,7 @@ def get(path: str, token: str = TOKEN_A, **params):
 
 def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="aegis-e2e-"))
-    env = dict(os.environ, AEGIS_DB_PATH=str(tmp / "backend.db"), PYTHONPATH=str(ROOT))
+    env = dict(os.environ, AEGIS_DB_DSN="dbname=aegis_e2e_db user=aegis_user password=aegis_pass host=127.0.0.1", PYTHONPATH=str(ROOT))
     print(f"working dir: {tmp}\n1) starting backend on {BASE}", flush=True)
     backend = subprocess.Popen([sys.executable, "-m", "uvicorn", "backend.main:app_factory", "--factory",
                                 "--port", str(PORT), "--log-level", "warning"], cwd=ROOT, env=env)

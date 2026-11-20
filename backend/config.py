@@ -1,7 +1,7 @@
 """Backend configuration. All thresholds are prototype values and configurable.
 
 Dev tokens are placeholders for two simulated tenants. Override with env vars:
-  AEGIS_TOKEN_TENANT_A, AEGIS_TOKEN_TENANT_B, AEGIS_AIOPS_KEY, AEGIS_DB_PATH
+  AEGIS_TOKEN_TENANT_A, AEGIS_TOKEN_TENANT_B, AEGIS_AIOPS_KEY, AEGIS_DB_DSN
 """
 
 from __future__ import annotations
@@ -26,7 +26,8 @@ def _default_tenants() -> dict[str, Tenant]:
 
 @dataclass(frozen=True)
 class Settings:
-    db_path: str = field(default_factory=lambda: os.environ.get("AEGIS_DB_PATH", "backend.db"))
+    db_path: str = field(default_factory=lambda: os.environ.get(
+        "AEGIS_DB_DSN", "dbname=aegis_db user=aegis_user password=aegis_pass host=127.0.0.1"))
     tokens: dict[str, Tenant] = field(default_factory=_default_tenants)  # bearer token -> tenant
     aiops_key: str = field(default_factory=lambda: os.environ.get("AEGIS_AIOPS_KEY", "dev-aiops-key"))
 
